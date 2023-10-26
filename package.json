@@ -1,0 +1,40 @@
+{
+  "name": "sports_complex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "npx basetag link && nodemon",
+    "lint": "eslint . --fix",
+    "migrate": "ts-node node_modules/.bin/knex --knexfile ./src/database/knexfile.ts migrate:latest"
+  },
+  "overrides": {
+    "semver": "^7.5.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.15.9",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "basetag": "^2.1.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "knex-types": "^0.5.0",
+    "pino": "^8.11.0"
+  }
+}
