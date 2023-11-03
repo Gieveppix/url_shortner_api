@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev": "nodemon",
     "lint": "eslint . --fix",
-    "test": "jest --watchAll --detectOpenHandles"
+    "test": "npx jest --config=jest.config.ts --watchAll --detectOpenHandles"
   },
   "overrides": {
     "semver": "^7.5.3"
@@ -16,9 +16,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.1",
+    "@types/express": "^4.17.20",
     "@types/jest": "^29.5.6",
+    "@types/jsonwebtoken": "^9.0.4",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^18.15.9",
+    "@types/nodemailer": "^6.4.13",
     "@types/supertest": "^2.0.15",
+    "@types/uuid": "^9.0.6",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "eslint": "^8.36.0",
@@ -30,16 +36,22 @@
     "prettier": "^2.8.7",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
+    "ts-mockito": "^2.6.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@types/express": "^4.17.17",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
     "knex-types": "^0.5.0",
+    "mailtrap": "^3.2.0",
+    "mongoose": "^7.6.3",
+    "nodemailer": "^6.9.7",
     "pino": "^8.16.1",
-    "pino-http": "^8.5.0"
+    "pino-http": "^8.5.0",
+    "uuid": "^9.0.1"
   }
 }

@@ -1,0 +1,5 @@
+export { authenticate } from "./authentication"
+export { hash } from "./hashPassword"
+export { generateToken } from "./generate-token"
+export { sendEmail } from "./sendConfirmationEmail"
+export { HandleValidationErrors, handleValidationErrors } from "./handleValidationErrors"
