@@ -30,7 +30,7 @@ export const sendEmail = (to: string, subject: string, text: string) => {
       if (error) {
         console.error('-------------------Email sending failed:-------------------', error);
       } else {
-        console.log('--------------------------Email sent:---------------------', info.response);
+        console.log('-------------------Email sent:-------------------', info.response);
       }
     }
   );

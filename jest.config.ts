@@ -13,7 +13,6 @@ const config: Config = {
   testEnvironment: "node",
   forceExit: true,
   resetMocks: true,
-  globalSetup: "<rootDir>/__tests__/test.setup.ts",
 };
 
 export default config

@@ -29,7 +29,7 @@ export interface ProcessVariables {
   JWT_SECRET: string,
   MONGO_URI: string,
   TRANSPORT_HOST?: string
-  TRANSPORT_PORT: number
+  TRANSPORT_PORT?: number
   TRANSPORT_AUTH_USER?: string
   TRANSPORT_AUTH_PASS?: string
   MAIL_OPTIONS_FROM?: string
