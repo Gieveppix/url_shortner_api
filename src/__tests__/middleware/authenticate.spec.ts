@@ -21,7 +21,7 @@ describe('Authentication Middleware', () => {
 
   it('should set the user in the request object when a valid token is provided', async () => {
     // If it fails, chances are that the token has expired
-    const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxZjhkZDgzNDg1Mzk5NjA0NDI2ZDgiLCJlbWFpbCI6InByb2JhOEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4NzMzOTEsImV4cCI6MTcwMDQ3ODE5MX0.-B94yiyd5-6ZibaHkXxQlvUNvwmGNIm3kI4dOp1g_uo';
+    const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxZjhkZDgzNDg1Mzk5NjA0NDI2ZDgiLCJlbWFpbCI6InByb2JhOEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4ODAyMDUsImV4cCI6MTcwMDQ4NTAwNX0.iynAYIWODQ8LG_KrUdRxvmnLl0GMaxwRNvGyYae7aI0';
     const response = await request
       .get('/api/ping')
       .set('Authorization', `Bearer ${validToken}`);

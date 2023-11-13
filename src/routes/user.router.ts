@@ -7,4 +7,5 @@ export const userRoute = express.Router({ mergeParams: true });
 
 userRoute.post('/auth/register', UserValidation.register, UserController.register);
 userRoute.post('/auth/login', UserValidation.login, UserController.login)
+userRoute.post('/auth/logout', authenticate, UserController.logout);
 userRoute.get('/auth/verify-email/:token', authenticate, UserController.verifyEmail);
