@@ -2,9 +2,9 @@ import bcrypt from 'bcrypt';
 import type { ApiResponse } from '../types/response.type';
 import { User, IUser } from '../types/models';
 import { HttpStatusCode } from '../types/response.type';
-import { generateToken } from '../middleware';
-import { sendEmail } from '../middleware';
+import { generateToken, tokenExpiryInSeconds, sendEmail } from '../middleware';
 import { v4 as uuidv4 } from "uuid"
+import { JWT } from '../types/models/jwt.model';
 
 // TODO: Check causes and messages
 class UserService {
@@ -102,15 +102,27 @@ class UserService {
       user.accountLocked = false;
       user.lockedUntil = null;
       await user.save();
-      
+
       const { password, failedLoginAttempts, ...userObject } = user.toObject();
+      
+      const token = generateToken(user);
+
+      const jwt = new JWT({
+        jwt: token,
+        createdBy: userObject._id,
+        expiresAt: new Date(Date.now() + tokenExpiryInSeconds * 1000), 
+      });
+
+      await jwt.save();
+      
+
       return {
         status: 'success',
         code: HttpStatusCode.Ok,
         data: {
           user: {
             ...userObject,
-            token: generateToken(user),
+            token: token,
           },
         },
       };
@@ -123,6 +135,26 @@ class UserService {
       };
     }
   }
+
+  async logout(userId: IUser['_id']): Promise<ApiResponse> {
+    try {
+        await JWT.updateMany({ createdBy: userId }, { isInvalidated: true });
+        
+        return {
+            status: 'success',
+            code: HttpStatusCode.Ok,
+            message: 'User logged out successfully',
+        };
+    } catch (error) {
+        return {
+            status: 'error',
+            code: HttpStatusCode.InternalServerError,
+            message: 'Internal server error',
+            cause: 'server-error',
+        };
+    }
+  }
+
 
   async verifyEmail(verificationToken: string): Promise<ApiResponse> {
     // TODO: Decode the user and check if that is the right user
