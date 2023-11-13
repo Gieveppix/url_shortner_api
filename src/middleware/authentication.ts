@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import { config } from '../config';
+import { decodeToken } from './token';
+import { HttpStatusCode, ResponseError } from '../types/response.type';
 
 interface RequestUser {
-  _id: number
+  _id: string
   email: string
 }
 
@@ -25,18 +25,25 @@ export const authenticate = (
 ) => {
   const token = req.header('Authorization')?.split(' ')[1];
 
+  const response: ResponseError = {
+    status: 'error',
+    code: HttpStatusCode.Unauthorized,
+    message: 'Access denied. No token provided or the provided token is not valid.',
+    cause: 'invalid-token'
+  };
+
   if (!token) {
-    return res.status(401).send('Access denied. No token provided.');
+    return res.status(HttpStatusCode.Unauthorized).send(response);
   }
 
   try {
-    const decoded = jwt.verify(token, config.jwtSecret) as DecodedUser;
+    const decoded = decodeToken(token) as DecodedUser;
     req.user = {
       _id: decoded._id,
       email: decoded.email,
     };
     next();
   } catch (error) {
-    res.status(400).send('Invalid token.');
+    res.status(HttpStatusCode.Unauthorized).send(response);
   }
 };

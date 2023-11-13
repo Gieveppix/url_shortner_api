@@ -14,3 +14,11 @@ export function generateToken(user: Pick<IUser, "_id" | "email"> ): string {
 
   return jwt.sign(payload, config.jwtSecret, options);
 }
+
+export function decodeToken(token: string) {
+  try {
+    return jwt.verify(token, config.jwtSecret);
+  } catch (error) {
+    return null; // Token is invalid or expired
+  }
+}
