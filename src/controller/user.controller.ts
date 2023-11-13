@@ -4,16 +4,6 @@ import UserService from '../service/user.service';
 import { handleResponse } from '../middleware';
 
 class UserController {
-  async login(req: Request, res: Response): Promise<void> {
-    const user: Pick<IUser, 'email' | 'password'> = {
-      email: req.body.email,
-      password: req.body.password,
-    };
-
-    const loginResult = await UserService.login(user);
-    handleResponse(loginResult, res)
-  }
-
   async register(req: Request, res: Response): Promise<void> {
     const user: Pick<IUser, 'email' | 'password' | 'firstName' | 'lastName'> = {
       email: req.body.email,
@@ -25,6 +15,24 @@ class UserController {
     const registerResult = await UserService.register(user);
     handleResponse(registerResult, res)
   }
+
+  async login(req: Request, res: Response): Promise<void> {
+    const user: Pick<IUser, 'email' | 'password'> = {
+      email: req.body.email,
+      password: req.body.password,
+    };
+
+    const loginResult = await UserService.login(user);
+    handleResponse(loginResult, res)
+  }
+
+  async logout(req: Request, res: Response): Promise<void> {
+    const userId = req.user?._id;
+
+    const logoutResult = await UserService.logout(userId);
+    handleResponse(logoutResult, res);
+}
+
 
   async verifyEmail(req: Request, res: Response): Promise<void> {
     const verifyResult = await UserService.verifyEmail(req.params.token);

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { decodeToken } from './token';
 import { HttpStatusCode, ResponseError } from '../types/response.type';
+import { JWT } from '../types/models/jwt.model';
 
 interface RequestUser {
   _id: string
@@ -18,7 +19,7 @@ declare module 'express' {
   }
 }
 
-export const authenticate = (
+export const authenticate = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -38,6 +39,12 @@ export const authenticate = (
 
   try {
     const decoded = decodeToken(token) as DecodedUser;
+    const userToken = await JWT.findOne({ jwt: token, isInvalidated: false });
+    
+    if (!userToken) {
+      return res.status(HttpStatusCode.Unauthorized).send(response);
+    }
+    
     req.user = {
       _id: decoded._id,
       email: decoded.email,
