@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { decodeToken } from './token';
 import { HttpStatusCode, ResponseError } from '../types/response.type';
-import { JWT } from '../types/models/jwt.model';
+import { JWT } from '../types/models';
 
 interface RequestUser {
   _id: string

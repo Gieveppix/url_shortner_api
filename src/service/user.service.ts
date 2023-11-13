@@ -1,10 +1,9 @@
 import bcrypt from 'bcrypt';
 import type { ApiResponse } from '../types/response.type';
-import { User, IUser } from '../types/models';
+import { User, IUser, JWT } from '../types/models';
 import { HttpStatusCode } from '../types/response.type';
 import { generateToken, tokenExpiryInSeconds, sendEmail } from '../middleware';
 import { v4 as uuidv4 } from "uuid"
-import { JWT } from '../types/models/jwt.model';
 
 // TODO: Check causes and messages
 class UserService {

@@ -44,6 +44,12 @@ class UrlController {
     handleResponse(result, res);
   }
 
+  async getLongUrl(req: Request, res: Response): Promise<void> {
+    const shortUrl = req.body.shortUrl;
+    const result = await UrlService.getLongUrl(shortUrl);
+    handleResponse(result, res);
+  }
+
   async edit(req: Request, res: Response): Promise<void> {
     const userId = req.user?._id;
     const urlId = req.params.url_id;
