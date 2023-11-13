@@ -76,6 +76,31 @@ class UrlService {
     }
   }  
 
+  async getLongUrl(shortUrl: string): Promise<ApiResponse> {
+    try {
+      const existingUrl = await Url.findOne({ shortUrl });
+  
+      const notFound = returnNotFoundIfNull(existingUrl);
+      if (notFound) return notFound
+
+      return {
+        status: 'success',
+        code: HttpStatusCode.Ok,
+        message: "Url added successfully",
+        data: {
+          originaUrl: existingUrl!.originalUrl
+        }
+      };      
+    } catch (error) {
+      return {
+        status: 'error',
+        code: HttpStatusCode.InternalServerError,
+        message: 'Internal server error',
+        cause: 'server-error',
+      };
+    }
+  }
+
   async create(payload: {
     urlName: IUrl['urlName'], 
     createdBy: IUrl['createdBy'], 
