@@ -377,13 +377,17 @@ export enum HttpStatusCode {
 }
 
 export type ResponseError = {
-  status: string,
+  status: 'error',
   code: HttpStatusCode,
   message: string | ValidationError,
   cause: string
 };
 
-export type ResponseType = {
-    code: HttpStatusCode;
-    message: string;
+export type ResponseSuccess<T extends object | undefined = undefined> = {
+  status: 'success';
+  code: HttpStatusCode;
+  message?: string;
+  data?: T;
 };
+
+export type ApiResponse = ResponseError | ResponseSuccess<{}>;

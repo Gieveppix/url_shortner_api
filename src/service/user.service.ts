@@ -1,17 +1,57 @@
 import bcrypt from 'bcrypt';
-import { Response } from 'express';
-import type { ResponseType } from '../types/response.type';
+import type { ApiResponse } from '../types/response.type';
 import { User, IUser } from '../types/models';
 import { HttpStatusCode } from '../types/response.type';
 import { generateToken } from '../middleware';
-import { LoginResponse } from '../types/user.type';
+import { sendEmail } from '../middleware';
+import { v4 as uuidv4 } from "uuid"
 
+// TODO: Check causes and messages
 class UserService {
-  async login(email: string, pass: string): Promise<LoginResponse> {
+  async register(payload: Pick<IUser, "email" | "password" | "firstName" | "lastName">): Promise<ApiResponse> {
     try {
-      const user: IUser | null = await User.findOne({ email });
   
-      if (user === null) {
+      const exists: IUser | null = await User.findOne({ email: payload.email });
+  
+      if (exists) {
+        return {
+          status: 'success',
+          code: HttpStatusCode.Ok,
+          message: 'User already registered',
+        };
+      }
+  
+      const verificationToken = uuidv4();
+  
+      sendEmail(payload.email, "Confirm Email", `go to link http://localhost:3000/api/verify-email/${verificationToken}`)
+  
+      const user = new User({ ...payload, verificationToken });
+  
+      await user.save();
+  
+      return {
+        status: 'success',
+        code: HttpStatusCode.Created,
+        message: "User registered successfully"
+      }
+    } catch (error) {
+      return {
+        status: 'error',
+        code: HttpStatusCode.InternalServerError,
+        message: 'Internal server error',
+        cause: 'server-error'
+      };
+    }
+  }
+
+  async login(payload: Pick<IUser, 'email' | 'password'>): Promise<ApiResponse> {
+    const MAX_LOGIN_ATTEMPTS = 5;
+    const LOCK_TIME = 1 * 60 * 1000; // 1 min
+
+    try {
+      const user: IUser | null = await User.findOne({ email: payload.email });
+  
+      if (!user) {
         return {
           status: 'error',
           code: HttpStatusCode.Unauthorized,
@@ -20,23 +60,58 @@ class UserService {
         };
       }
     
-      const isPasswordValid = await bcrypt.compare(pass, user.password);
+      const isPasswordValid = await bcrypt.compare(payload.password, user.password);
       if (!isPasswordValid) {
-        return {
-          status: 'error',
-          code: HttpStatusCode.Unauthorized,
-          message: 'Invalid username or password',
-          cause: 'unauthorized-error'
-        };
+        if (user.accountLocked && user.lockedUntil && user.lockedUntil.getTime() > Date.now()) {
+          return {
+            status: 'error',
+            code: HttpStatusCode.Unauthorized,
+            message: 'Account locked. Please try again later.',
+            cause: 'account-locked',
+          };
+        }
+
+        user.failedLoginAttempts += 1;
+        if (user.failedLoginAttempts >= MAX_LOGIN_ATTEMPTS) {
+          // Lock the account
+          user.accountLocked = true;
+          user.lockedUntil = new Date(Date.now() + LOCK_TIME);
+        }
+        await user.save();
+        
+        if ((MAX_LOGIN_ATTEMPTS - user.failedLoginAttempts) > 0) {
+          return {
+            status: 'error',
+            code: HttpStatusCode.Unauthorized,
+            message: `Invalid username or password. Login attempts left: ${MAX_LOGIN_ATTEMPTS - user.failedLoginAttempts}`,
+            cause: 'unauthorized-error'
+          };
+        } else {
+          return {
+            status: 'error',
+            code: HttpStatusCode.Unauthorized,
+            message: `Invalid username or password. Account locked.`,
+            cause: 'unauthorized-error'
+          };
+        }
       }
+
+
+      // If login is successful, reset failed attempts and unlock account if it was previously locked
+      user.failedLoginAttempts = 0;
+      user.accountLocked = false;
+      user.lockedUntil = null;
+      await user.save();
       
-      const { password, ...userObject } = user.toObject();
+      const { password, failedLoginAttempts, ...userObject } = user.toObject();
       return {
         status: 'success',
         code: HttpStatusCode.Ok,
-        user: {
-          ...userObject,
-          token: generateToken(user),
+        data: {
+          user: {
+            ...userObject,
+            token: generateToken(user),
+          },
         },
       };
     } catch (error) {
@@ -49,41 +124,35 @@ class UserService {
     }
   }
 
-  handleLoginResponse(response: LoginResponse, res: Response): void {
-    if (response.status === 'success') {
-      res.status(response.code).send(response);
-      return
-    } 
-    res.status(response.code).send(response);
-    
-  }
-
-  async verifyEmail(verificationToken: string): Promise<ResponseType> {
+  async verifyEmail(verificationToken: string): Promise<ApiResponse> {
+    // TODO: Decode the user and check if that is the right user
     try {
-      // Find the user by verification token
       const user = await User.findOne({ verificationToken });
 
       if (!user) {
         return {
+          status: "error",
           code: HttpStatusCode.BadRequest,
           message: 'Tokens do not match!',
+          cause: 'tokens-do-not-match'
         };
       }
 
-      // Set emailVerified to true
       user.emailVerified = true;
 
-      // Save the updated user
       await user.save();
 
       return {
+        status: "success",
         code: HttpStatusCode.Ok,
         message: 'Email successfully verified',
       };
     } catch (error) {
       return {
+        status: "error",
         code: HttpStatusCode.InternalServerError,
         message: 'Unable to verify email',
+        cause: "unable-to-verify-email"
       };
     }
   }

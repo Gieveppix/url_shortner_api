@@ -1,25 +1,16 @@
-// router.post('/shorten', authenticate, async (req, res) => {
-//   const { originalUrl, shortCode } = req.body;
-//   const url = await createShortUrl(originalUrl, shortCode, req.user);
-//   res.json(url);
-// });
+import express from "express";
+import UrlController from "../controller/url.controller";
+import UrlValidation from "../validation/url"
+import { authenticate } from "../middleware";
 
-// router.get('/:shortCode', async (req, res) => {
-//   const { shortCode } = req.params;
-//   const url = await findUrlByShortCode(shortCode);
-//   if (url) {
-//     res.redirect(url.originalUrl);
-//   } else {
-//     res.status(404).json({ message: 'URL not found' });
-//   }
-// });
+export const urlRoute = express.Router({ mergeParams: true });
 
-// router.get('/', authenticate, async (req, res) => {
-//   const urls = await getUserUrls(req.user);
-//   res.json(urls);
-// });
+urlRoute.post('/urls', authenticate, UrlValidation.create, UrlController.create);
 
-// router.delete('/:id', authenticate, async (req, res) => {
-//   await deleteUrl(req.params.id, req.user);
-//   res.json({ message: 'URL deleted' });
-// });
+urlRoute.get('/urls', authenticate, UrlController.getAll)
+
+urlRoute.get('/urls/user', authenticate, UrlController.getByUserId);
+
+urlRoute.patch('/urls/:url_id', authenticate, UrlValidation.edit, UrlController.edit);
+
+urlRoute.delete('/urls/:url_id', authenticate, UrlController.delete);

@@ -10,6 +10,9 @@ export interface IUser extends Document {
   emailVerified: Boolean;
   verificationToken: string;
   password: string;
+  failedLoginAttempts: number,
+  accountLocked: boolean,
+  lockedUntil: Date | null,
   createdAt?: Date;
   updatedAt?: Date | null;
   deletedAt?: Date | null;
@@ -42,6 +45,17 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
+  failedLoginAttempts: { 
+    type: Number, 
+    default: 0 
+  },
+  accountLocked: { 
+    type: Boolean, 
+    default: false 
+  },
+  lockedUntil: { 
+    type: Date 
+  },
   deletedAt: {
     type: Date,
     default: null,
@@ -55,6 +69,16 @@ userSchema.set('timestamps', true);
 userSchema.pre('save', 
 async function(this: IUser,next) { 
   await hash(this, next) 
+});
+
+// Won't return fields with deletedAt true 
+userSchema.pre('find', function() {
+  this.where({ deletedAt: null });
+});
+
+// Won't return fields with deletedAt true 
+userSchema.pre('findOne', function() {
+  this.where({ deletedAt: null });
 });
 
 // Define a virtual property for the full name
