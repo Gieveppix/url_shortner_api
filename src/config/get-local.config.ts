@@ -9,6 +9,7 @@ export function getLocalConfig(processVariables: ProcessVariables): Config {
     environment: 'local',
     logLevel: processVariables.LOG_LEVEL ?? 'info',
     jwtSecret: processVariables.JWT_SECRET,
+    jwtExpiryInSeconds: processVariables.JWT_EXPIRY_IN_SECONDS,
     mongoURI: processVariables.MONGO_URI,
     transportHost: processVariables.TRANSPORT_HOST,
     transportPort: processVariables.TRANSPORT_PORT,

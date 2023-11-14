@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import type { ApiResponse } from '../types/response.type';
 import { User, IUser, Token, TokenAction, TokenActions } from '../types/models';
 import { HttpStatusCode } from '../types/response.type';
-import { generateToken, tokenExpiryInSeconds, sendEmail } from '../middleware';
+import { sendEmail, saveToken } from '../middleware';
 import { v4 as uuidv4 } from "uuid"
 import { returnBadRequestIfNull, returnUnauthorizedIfNotEqual } from '../middleware/handleResponse';
 
@@ -27,12 +27,19 @@ class UserService {
       
       await user.save();
       
+      
       await sendEmail(payload.email, user._id, verificationToken);
       
+      // return a valid jwt so the user gets logged in right away
+      const token = await saveToken(user)
+
       return {
         status: 'success',
         code: HttpStatusCode.Created,
-        message: "User registered successfully"
+        message: "User registered successfully",
+        data: {
+          token
+        }
       }
     } catch (error) {
       return {
@@ -104,17 +111,8 @@ class UserService {
       
       const { password, failedLoginAttempts, ...userObject } = user.toObject();
       
-      const token = generateToken(user);
-      
-      const jwt = new Token({
-        jwt: token,
-        createdBy: userObject._id,
-        expiresAt: new Date(Date.now() + tokenExpiryInSeconds * 1000), 
-      });
-      
-      await jwt.save();
-      
-      
+      const token = await saveToken(user)
+
       return {
         status: 'success',
         code: HttpStatusCode.Ok,

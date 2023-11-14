@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { IUser } from '../types/models';
+import { IUser, Token } from '../types/models';
 import { config } from '../config'
 
-export const tokenExpiryInSeconds: number = 60 * 60 * 24 * 7; // 7 days
 
 export function generateToken(user: Pick<IUser, "_id" | "email"> ): string {
   const payload = {
@@ -11,7 +10,7 @@ export function generateToken(user: Pick<IUser, "_id" | "email"> ): string {
   };
 
   const options = {
-    expiresIn: tokenExpiryInSeconds,
+    expiresIn: config.jwtExpiryInSeconds,
   };
 
   return jwt.sign(payload, config.jwtSecret, options);
@@ -24,3 +23,22 @@ export function decodeToken(token: string) {
     return null;
   }
 }
+
+export async function saveToken(user: IUser) {
+  try {
+    const token = generateToken(user);
+  
+    const jwt = new Token({
+      jwt: token,
+      createdBy: user._id,
+      expiresAt: new Date(Date.now() + config.jwtExpiryInSeconds * 1000), 
+    });
+    
+    await jwt.save();
+    
+    return token
+  } catch (error) {
+    throw error
+  }
+}
+

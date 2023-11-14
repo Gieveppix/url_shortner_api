@@ -13,6 +13,7 @@ export interface Config {
   environment: Environment;
   logLevel: Level;
   jwtSecret: string,
+  jwtExpiryInSeconds: number,
   mongoURI: string
   transportHost?: string
   transportPort?: number
@@ -27,6 +28,7 @@ export interface ProcessVariables {
   ENV?: Environment;
   LOG_LEVEL?: Level;
   JWT_SECRET: string,
+  JWT_EXPIRY_IN_SECONDS: number;
   MONGO_URI: string,
   TRANSPORT_HOST?: string
   TRANSPORT_PORT?: number
