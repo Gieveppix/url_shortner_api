@@ -3,3 +3,4 @@ coverage
 jest.config.js
 dist
 .env
+package-lock.json
