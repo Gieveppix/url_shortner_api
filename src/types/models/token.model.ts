@@ -1,8 +1,7 @@
 import { Document, Model, model, Schema } from 'mongoose';
 import { IUser } from './user.model';
 
-// Interface for the JWT document
-export interface IJWT extends Document {
+export interface IToken extends Document {
   jwt: string;
   createdBy: IUser['_id'];
   isInvalidated?: boolean;
@@ -11,7 +10,7 @@ export interface IJWT extends Document {
   updatedAt?: Date | null;
 }
 
-const jwtSchema = new Schema<IJWT>({
+const tokenSchema = new Schema<IToken>({
   jwt: {
     type: String,
     required: true,
@@ -31,6 +30,6 @@ const jwtSchema = new Schema<IJWT>({
   },
 });
 
-jwtSchema.set('timestamps', true);
+tokenSchema.set('timestamps', true);
 
-export const JWT: Model<IJWT> = model('JWT', jwtSchema);
+export const Token: Model<IToken> = model('Token', tokenSchema);

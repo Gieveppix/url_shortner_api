@@ -7,10 +7,10 @@ class UrlController {
     const result = await UrlService.create({
       urlName: req.body.urlName,
       createdBy: req.user?._id,
-      originalUrl: req.body.originalUrl, // TODO: Has to contain .{something}/ or end with .{something}
-      shortUrl: req.body.shortUrl, // TODO: Has to contain .{something}/ or end with .{something}
+      originalUrl: req.body.originalUrl,
+      shortUrl: req.body.shortUrl,
       urlLength: req.body.urlLength, 
-      urlCharset: req.body.urlCharset, // TODO: Validate so there is no spaces and that the types align
+      urlCharset: req.body.urlCharset,
       urlCapitalization: req.body.urlCapitalization
     });
     handleResponse(result, res);

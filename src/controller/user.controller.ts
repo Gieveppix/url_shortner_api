@@ -35,8 +35,13 @@ class UserController {
 
 
   async verifyEmail(req: Request, res: Response): Promise<void> {
-    const verifyResult = await UserService.verifyEmail(req.params.token);
-    res.status(verifyResult.code).send(verifyResult.message);
+    const result = await UserService.verifyEmail(req.user?._id, req.params.token);
+    res.status(result.code).send(result.message);
+  }
+
+  async sendEmailAgain(req: Request, res: Response): Promise<void> {
+    const result = await UserService.sendEmailAgain(req.user?._id);
+    res.status(result.code).send(result.message);
   }
 }
 

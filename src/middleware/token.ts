@@ -10,8 +10,6 @@ export function generateToken(user: Pick<IUser, "_id" | "email"> ): string {
     email: user.email,
   };
 
-  console.log(typeof(tokenExpiryInSeconds))
-
   const options = {
     expiresIn: tokenExpiryInSeconds,
   };

@@ -80,7 +80,7 @@ class UrlService {
     try {
       const existingUrl = await Url.findOne({ shortUrl });
   
-      const notFound = returnNotFoundIfNull(existingUrl);
+      const notFound = returnNotFoundIfNull(existingUrl, 'URL not found');
       if (notFound) return notFound
 
       return {
@@ -160,7 +160,7 @@ class UrlService {
       const existingUrl = await Url.findById(urlId);
 
 
-      const notFound = returnNotFoundIfNull(existingUrl);
+      const notFound = returnNotFoundIfNull(existingUrl, 'URL not found');
       if (notFound) return notFound
 
       // Check if the url was created by the user that wants to modify it
@@ -198,7 +198,7 @@ class UrlService {
     try {
       const existingUrl = await Url.findById(urlId);
   
-      const notFound = returnNotFoundIfNull(existingUrl);
+      const notFound = returnNotFoundIfNull(existingUrl, 'URL not found');
       if (notFound) return notFound;
 
       // Check if the url was created by the user that wants to delete it

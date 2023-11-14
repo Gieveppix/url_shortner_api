@@ -2,12 +2,24 @@ import { Response } from "express";
 import { Document } from "mongoose";
 import { ApiResponse, HttpStatusCode } from "../types/response.type";
 
-export function returnNotFoundIfNull<T>(value: Document<T> | null): ApiResponse | null {
+export function returnBadRequestIfNull<T>(value: Document<T> | null, message: string): ApiResponse | null {
+  if (!value) {
+    return {
+      status: 'error',
+      code: HttpStatusCode.BadRequest,
+      message,
+      cause: 'not-found',
+    };
+  }
+  return null;
+}
+
+export function returnNotFoundIfNull<T>(value: Document<T> | null, message: string): ApiResponse | null {
   if (!value) {
     return {
       status: 'error',
       code: HttpStatusCode.NotFound,
-      message: 'URL not found',
+      message,
       cause: 'not-found',
     };
   }
