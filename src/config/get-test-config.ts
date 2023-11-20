@@ -1,4 +1,4 @@
-import { Config, ProcessVariables } from "../types/config.type"
+import { Config, ProcessVariables } from "../types/config"
 import dotenv from 'dotenv';
 
 dotenv.config();

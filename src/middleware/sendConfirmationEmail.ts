@@ -1,6 +1,7 @@
 import nodemailer, { Transporter } from "nodemailer";
 import { config } from "../config";
-import { IUser, TokenAction, TokenActions } from "../types/models";
+import { IUser, TokenAction, TokenActions } from "../models";
+import { logger } from "../helpers/logger";
 
 interface EmailOptions {
   to: string;
@@ -47,9 +48,9 @@ export const sendEmail = async (to: string, userId: IUser['_id'], verificationTo
     ...mailOptions 
   }, (error, info) => {
       if (error) {
-        console.error('-------------------Email sending failed:-------------------', error);
+        logger.error(`-------------------Email sending failed:------------------- ${error}`);
       } else {
-        console.log('-------------------Email sent:-------------------', info.response);
+        logger.info(`-------------------Email sent:------------------- ${info.response}`);
       }
     }
   );

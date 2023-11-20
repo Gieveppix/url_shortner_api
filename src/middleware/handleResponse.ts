@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { Document } from "mongoose";
-import { ApiResponse, HttpStatusCode } from "../types/response.type";
+import { ApiResponse, HttpStatusCode } from "../types/response";
 
 export function returnBadRequestIfNull<T>(value: Document<T> | null, message: string): ApiResponse | null {
   if (!value) {
@@ -38,10 +38,11 @@ export function returnUnauthorizedIfNotEqual(value: string | undefined, userId: 
   return null;
 }
 
-export function handleResponse<T extends object>(response: T, res: Response): void {
-  if ('code' in response) {
+export function handleResponse<T extends ApiResponse>(response: T | void, res: Response): void {
+  if (response && 'code' in response) {
     res.status((response as any).code).send(response);
   } else {
-    res.status(HttpStatusCode.InternalServerError).send('Invalid response object');
+    console.log(response)
+    res.status(HttpStatusCode.InternalServerError).send('Internal_HANDLE_RESPONSE');
   }
 }

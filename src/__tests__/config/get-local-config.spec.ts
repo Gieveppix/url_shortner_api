@@ -1,5 +1,5 @@
-import { getLocalConfig } from '../../config/get-local.config';
-import { Config, ProcessVariables } from '../../types/config.type';
+import { getLocalConfig } from '../../config/get-local-config';
+import { Config, ProcessVariables } from '../../types/config';
 
 describe('getLocalConfig', () => {
   it('should return local config', () => {

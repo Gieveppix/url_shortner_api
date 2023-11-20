@@ -1,5 +1,5 @@
 import express from "express";
-import UrlController from "../controller/url.controller";
+import UrlController from "../controller/url";
 import UrlValidation from "../validation/url"
 import { authenticate } from "../middleware";
 

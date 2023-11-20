@@ -383,11 +383,11 @@ export type ResponseError = {
   cause: string
 };
 
-export type ResponseSuccess<T extends object | undefined = undefined> = {
+export type ResponseSuccess<T> = {
   status: 'success';
   code: HttpStatusCode;
   message?: string;
-  data?: T;
+  data?: T; // TODO: Replace this with all data union type
 };
 
 export type ApiResponse = ResponseError | ResponseSuccess<{}>;

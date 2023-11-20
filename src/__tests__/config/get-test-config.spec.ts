@@ -1,5 +1,5 @@
-import { getTestConfig } from '../../config/get-test.config';
-import { Config, ProcessVariables } from '../../types/config.type';
+import { getTestConfig } from '../../config/get-test-config';
+import { Config, ProcessVariables } from '../../types/config';
 
 describe('getTestConfig', () => {
   it('should return test config', () => {

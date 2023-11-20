@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { IUser, Token } from '../types/models';
+import { IUser, Token } from '../models';
 import { config } from '../config'
 
 

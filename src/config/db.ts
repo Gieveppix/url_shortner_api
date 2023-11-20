@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { logger } from '../helpers/logger.helper';
-import { IUser, User } from '../types/models';
+import { logger } from '../helpers/logger';
+import { IUser, User } from '../models';
 
 const connectDB = async (MONGO_URI: string) => {
   try {

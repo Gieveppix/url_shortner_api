@@ -2,9 +2,9 @@ import {
   Config,
   Environment,
   ProcessVariables,
-} from '../types/config.type.js';
-import { getLocalConfig } from './get-local.config';
-import { getTestConfig } from './get-test.config';
+} from '../types/config';
+import { getLocalConfig } from './get-local-config';
+import { getTestConfig } from './get-test-config';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

@@ -1,10 +1,9 @@
 import express from 'express';
-import { logger, httpLogger } from "./helpers/logger.helper"
-import { config } from "./config"
-import { connectDB } from './database/db';
-import { userRoute } from './routes/user.router';
-import { authenticate } from './middleware';
-import { urlRoute } from './routes/url.router';
+import { logger, httpLogger } from "./helpers/logger"
+import { config, connectDB } from "./config"
+import { userRoute } from './routes/user';
+import { authenticate, isVerified } from './middleware';
+import { urlRoute } from './routes/url';
 
 const app = express();
 app.use(express.json());
@@ -13,7 +12,7 @@ app.use('/api', userRoute);
 app.use('/api', urlRoute);
 
 
-app.get('/api/ping', authenticate, function (req, res) {
+app.get('/api/ping', authenticate, isVerified, function (req, res) {
   res.send('pong');
 });
 

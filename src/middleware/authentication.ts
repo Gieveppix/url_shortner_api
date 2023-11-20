@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { decodeToken } from './token';
-import { HttpStatusCode, ResponseError } from '../types/response.type';
-import { Token } from '../types/models';
+import { HttpStatusCode, ResponseError } from '../types/response';
+import { Token } from '../models';
 
 interface RequestUser {
   _id: string

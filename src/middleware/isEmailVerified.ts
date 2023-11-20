@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { HttpStatusCode, ResponseError } from '../types/response.type';
-import { IUser } from '../types/models/user.model';
+import { HttpStatusCode, ResponseError } from '../types/response';
+import { IUser } from '../models';
 
 export const isVerified = (
   req: Request,

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ValidationError, validationResult } from "express-validator";
-import { HttpStatusCode, ResponseError } from "../types/response.type";
+import { HttpStatusCode, ResponseError } from "../types/response";
 
 export type HandleValidationErrors = (req: Request, res: Response, next: NextFunction) => void;
 

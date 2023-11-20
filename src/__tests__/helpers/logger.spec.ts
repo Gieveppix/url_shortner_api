@@ -1,4 +1,4 @@
-import { logger } from '../../helpers/logger.helper';
+import { logger } from '../../helpers/logger';
 // import { mock, when, anything } from 'ts-mockito';
 // import { IncomingMessage, ServerResponse } from 'http';
 

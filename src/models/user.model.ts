@@ -1,5 +1,5 @@
 import { Document, Model, model, Schema } from 'mongoose';
-import { hash } from "../../middleware"
+import { hash } from '../middleware'
 
 // Interface for the User document
 export interface IUser extends Document {

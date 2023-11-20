@@ -1,5 +1,5 @@
 import { CallbackWithoutResultAndOptionalError } from "mongoose";
-import { IUser } from "../database/db";
+import { IUser } from "../config/db";
 import bcrypt from "bcrypt"
 
 export const hash = async (user: IUser, next: CallbackWithoutResultAndOptionalError) => {
@@ -10,4 +10,4 @@ export const hash = async (user: IUser, next: CallbackWithoutResultAndOptionalEr
   const hashedPassword = await bcrypt.hash(user.password, salt);
   user.password = hashedPassword;
   return next();
-}
+} // TODO Move to helper

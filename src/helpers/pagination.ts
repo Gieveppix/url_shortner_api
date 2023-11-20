@@ -1,5 +1,10 @@
 import { FilterQuery, Document } from "mongoose";
 
+export type Pagination = {
+  page: number;
+  perPage: number;
+}
+
 type PaginatedPayload<T> = Partial<T> & {
   page?: number;
   perPage?: number;
@@ -12,6 +17,7 @@ type PaginatedResult = {
   page: number | null;
   perPage: number | null;
 };
+
 
 // TODO: Validate the page and per page that they have to be positive and not equal to 0
 export async function queryAndPaginateResults<T extends Document>(

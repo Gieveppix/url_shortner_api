@@ -4,6 +4,7 @@ export const appendToBaseUrl = (url: string) => {
   return `https://www.${url}`
 }
 
+//TODO: Change the complete logic
 export const generateShortUrl = (payload: any) => { //TODO: Remove any pls
   if (!payload.shortUrl) {
     return appendToBaseUrl(
