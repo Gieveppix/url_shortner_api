@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import type { ApiResponse } from '../types/response';
-import { User, IUser, Token, TokenAction } from '../models';
+import { User, Token, TokenAction } from '../models';
+import { IUser } from '../types';
 import { HttpStatusCode } from '../types/response';
 import { sendEmail, saveToken } from '../middleware';
 import { v4 as uuidv4 } from "uuid"

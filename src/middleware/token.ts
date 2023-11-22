@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { IUser, Token } from '../models';
 import { config } from '../config'
+import { IUser } from '../types';
+import { Token } from '../models';
 
 
 export function generateToken(user: Pick<IUser, "_id" | "email"> ): string {

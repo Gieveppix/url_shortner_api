@@ -1,31 +1,9 @@
 import { Request, Response } from 'express';
 import UrlService from '../service/url';
-import { IUrl, IUser } from '../models';
-import { GenerateOptions  } from 'randomstring';
+import { IUrl, IUser } from '../types';
 import { ApiResponse } from '../types';
 import { HandleController } from '../middleware/errorCodes';
-
-//TODO: move types to types folder
-export type CreateUrl = {
-  urlName: IUrl['urlName'], 
-  originalUrl: IUrl["originalUrl"], 
-  createdBy: IUrl['createdBy'], 
-  shortUrl?: IUrl['shortUrl'], 
-  length?: GenerateOptions['length'], 
-  charset?: GenerateOptions['charset'], 
-  capitalization?: GenerateOptions['capitalization']
-}
-
-export type GetUrlQuery = {
-  urlName?: IUrl['urlName'], 
-  originalUrl?: IUrl["originalUrl"], 
-  shortUrl?: IUrl['shortUrl'],
-}
-
-export type GetUrlQueryWithPagination = GetUrlQuery & {
-  page?: number,
-  perPage?: number
-}
+import { CreateUrl, GetUrlQuery, GetUrlQueryWithPagination } from '../types';
 
 class UrlController {
   @HandleController

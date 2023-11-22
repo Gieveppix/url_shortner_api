@@ -1,5 +1,5 @@
-import { ResponseError } from '../types'
-import { errorCode, ErrorName } from './errorCodes';
+import { ErrorName, ResponseError } from '../types'
+import { errorCode } from "./errorCodes"
 
 class FormatError {
   private req?: any;

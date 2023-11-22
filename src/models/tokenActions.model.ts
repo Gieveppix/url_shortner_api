@@ -1,17 +1,5 @@
-import { Document, Model, model, Schema } from 'mongoose';
-import { IUser } from './user.model';
-
-export type TokenActions = "emailVerification"
-
-export interface ITokenAction extends Document {
-  token: string;
-  actionName: TokenActions
-  createdBy: IUser['_id'];
-  executedAt: Date | null;
-  expiresAt: Date;
-  createdAt?: Date;
-  updatedAt?: Date | null;
-}
+import { Model, model, Schema } from 'mongoose';
+import { ITokenAction } from '../types';
 
 const tokenActionSchema = new Schema<ITokenAction>({
   token: {

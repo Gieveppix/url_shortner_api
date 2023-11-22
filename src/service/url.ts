@@ -1,11 +1,8 @@
-import { Url, IUrl } from '../models';
-import { ApiResponse, HttpStatusCode } from '../types/response';
+import { Url } from '../models';
 import { appendToBaseUrl, generateShortUrl } from "../helpers/urlOps";
 import { queryAndPaginateResults } from "../helpers/pagination";
-import { returnNotFoundIfNull, returnUnauthorizedIfNotEqual } from "../middleware/handleResponse";
-import { CreateUrl, GetUrlQuery, GetUrlQueryWithPagination } from '../controller/url';
+import { IUser, IUrl, ApiResponse, HttpStatusCode, CreateUrl, GetUrlQuery, GetUrlQueryWithPagination } from '../types';
 import { HandleService } from '../middleware/errorCodes';
-import { IUser } from '../models';
 
 // TODO: Check causes and messages
 class UrlService {
@@ -81,9 +78,9 @@ class UrlService {
   async getLongUrl(shortUrl: IUrl['shortUrl']): Promise<ApiResponse> {
     const existingUrl = await Url.findOne({ shortUrl });
 
-    //TODO: remove
-    const notFound = returnNotFoundIfNull(existingUrl, 'URL not found');
-    if (notFound) return notFound
+    if(!existingUrl) {
+      throw "URL_EXISTS"
+    }
 
     return {
       status: 'success',

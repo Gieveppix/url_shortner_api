@@ -1,25 +1,8 @@
 import { logger } from "../helpers/logger";
-import { HttpStatusCode, ResponseError } from "../types";
+import { ErrorCodeMap, ErrorName, HttpStatusCode } from "../types";
 import FormatError from "./errorHandler";
 import { handleResponse } from "./handleResponse";
 
-export type ErrorName =
-  'SOMETHING_WENT_WRONG'
-| 'INTERNAL_SERVER_ERROR'
-| 'VALIDATION_ERROR'
-| 'URL_EXISTS'
-| 'ALREADY_REGISTERED'
-| 'WRONG_CREDENTIALS' 
-| 'ACCOUNT_LOCKED'
-| 'INVALID_TOKEN'
-| 'PERMISSION_DENIED'
-| 'USER_NOT_FOUND'
-| 'URL_NOT_FOUND'
-| 'VERIFICATION_TOKEN_EXPIRED';
-
-type ErrorCodeMap = {
-  [key in ErrorName]: ResponseError;
-};
 export const errorCode: ErrorCodeMap = {
   INTERNAL_SERVER_ERROR: {
     status: "error",

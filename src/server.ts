@@ -16,14 +16,23 @@ app.get('/api/ping', authenticate, isVerified, function (req, res) {
   res.send('pong');
 });
 
-const port = config.port || 3002;
+const startServer = async () => {
+  try {
+    await connectDB(config.mongoURI);
+    const port = config.port || 3002;
+    const server = app.listen(port, () => {
+      logger.info(`App is up on port ${port}`);
+    });
 
-const server = app.listen(port, () => {
-  logger.info(`App is up on port ${port}`);
-});
+    process.on('SIGINT', () => {
+      server.close(() => {
+        logger.info('Server closed');
+        process.exit(0);
+      });
+    });
+  } catch (error) {
+    logger.error(`Failed to connect to the database: ${error}`);
+  }
+};
 
-connectDB(config.mongoURI)
-.catch((e) =>
-  server.close(e)
-)
-export { app, server }
+startServer();

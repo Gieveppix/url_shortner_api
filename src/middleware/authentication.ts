@@ -1,17 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { decodeToken } from './token';
-import { HttpStatusCode, ResponseError } from '../types/response';
+import { RequestUser, DecodedUser, HttpStatusCode, ResponseError } from '../types';
 import { Token } from '../models';
-
-interface RequestUser {
-  _id: string
-  email: string
-}
-
-interface DecodedUser extends RequestUser {
-  iat: number;
-  exp: number;
-}
 
 declare module 'express' {
   interface Request {

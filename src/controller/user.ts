@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IUser } from '../models';
+import { IUser } from '../types';
 import UserService from '../service/user';
 import { HandleController } from '../middleware/errorCodes';
 import { ApiResponse } from '../types';

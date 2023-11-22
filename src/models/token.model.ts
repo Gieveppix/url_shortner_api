@@ -1,14 +1,5 @@
-import { Document, Model, model, Schema } from 'mongoose';
-import { IUser } from './user.model';
-
-export interface IToken extends Document {
-  jwt: string;
-  createdBy: IUser['_id'];
-  isInvalidated?: boolean;
-  expiresAt: Date;
-  createdAt?: Date;
-  updatedAt?: Date | null;
-}
+import { Model, model, Schema } from 'mongoose';
+import { IToken } from '../types';
 
 const tokenSchema = new Schema<IToken>({
   jwt: {

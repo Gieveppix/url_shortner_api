@@ -1,6 +1,7 @@
 import nodemailer, { Transporter } from "nodemailer";
 import { config } from "../config";
-import { IUser, TokenAction, TokenActions } from "../models";
+import { IUser, TokenActions } from "../types";
+import { TokenAction } from "../models";
 import { logger } from "../helpers/logger";
 
 interface EmailOptions {

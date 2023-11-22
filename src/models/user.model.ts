@@ -1,22 +1,6 @@
-import { Document, Model, model, Schema } from 'mongoose';
+import { Model, model, Schema } from 'mongoose';
+import { IUser } from '../types/user';
 import { hash } from '../middleware'
-
-// Interface for the User document
-export interface IUser extends Document {
-  _id?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  emailVerified: Boolean;
-  verificationToken: string;
-  password: string;
-  failedLoginAttempts: number,
-  accountLocked: boolean,
-  lockedUntil: Date | null,
-  createdAt?: Date;
-  updatedAt?: Date | null;
-  deletedAt?: Date | null;
-}
 
 // User schema
 const userSchema = new Schema<IUser>({

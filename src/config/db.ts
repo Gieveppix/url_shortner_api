@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { logger } from '../helpers/logger';
-import { IUser, User } from '../models';
 
 const connectDB = async (MONGO_URI: string) => {
   try {
@@ -14,6 +13,4 @@ const connectDB = async (MONGO_URI: string) => {
 
 export { 
   connectDB,
-  IUser, 
-  User 
 }

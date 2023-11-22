@@ -1,16 +1,5 @@
-import { Document, Model, model, Schema } from 'mongoose';
-import { IUser } from './user.model';
-
-export interface IUrl extends Document {
-  urlName?: string;
-  originalUrl: string;
-  shortUrl: string;
-  accessCount?: number;
-  createdBy: IUser['_id'];
-  createdAt?: Date;
-  updatedAt?: Date | null;
-  deletedAt?: Date | null;
-}
+import { Model, model, Schema } from 'mongoose';
+import { IUrl } from '../types/url';
 
 const urlSchema = new Schema<IUrl>({
   urlName: {
