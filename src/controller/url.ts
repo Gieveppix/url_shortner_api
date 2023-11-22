@@ -13,9 +13,9 @@ class UrlController {
       createdBy: req.user?._id,
       originalUrl: req.body.originalUrl,
       shortUrl: req.body.shortUrl,
-      length: req.body.urlLength, 
-      charset: req.body.urlCharset,
-      capitalization: req.body.urlCapitalization
+      length: req.body.length, 
+      charset: req.body.charset,
+      capitalization: req.body.capitalization
     }
      // TODO: TEST EVERY CONTROLLER THAT IT RETURNS
      return UrlService.create(url);
@@ -31,7 +31,7 @@ class UrlController {
   @HandleController
   async getByUserId(req: Request, res: Response): Promise<ApiResponse | void> {
     const userId: IUser['_id'] = req.user?._id;
-    const body: GetUrlQueryWithPagination = req.body;
+    const body: GetUrlQueryWithPagination = req.query;
 
     return UrlService.getByUserId(userId, body);
     
@@ -61,8 +61,6 @@ class UrlController {
   
     return UrlService.delete(userId, urlId);
   }
-  
-  
 }
 
 export default new UrlController();
