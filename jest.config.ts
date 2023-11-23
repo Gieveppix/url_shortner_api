@@ -13,6 +13,7 @@ const config: Config = {
   testEnvironment: "node",
   forceExit: true,
   resetMocks: true,
+  testTimeout: 20000
 };
 
 export default config

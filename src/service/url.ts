@@ -8,7 +8,6 @@ import { Document, FilterQuery } from 'mongoose';
 class UrlService {
   @HandleService
   async create(payload: CreateUrl): Promise<ApiResponse> {
-    //TODO: Give option to either put in with https://....... or without
     const data: CreateUrl = payload
     data.originalUrl = this.formatUrl(data.originalUrl)
     data.shortUrl = this.generateShortUrl(data)

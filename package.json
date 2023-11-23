@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon",
+    "dev": "node ./dist/server.js",
     "lint": "eslint . --fix",
     "test": "npx jest --config=jest.config.ts --watchAll --detectOpenHandles"
   },
@@ -47,7 +47,6 @@
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
-    "knex-types": "^0.5.0",
     "mailtrap": "^3.2.0",
     "mongoose": "^7.6.3",
     "nodemailer": "^6.9.7",

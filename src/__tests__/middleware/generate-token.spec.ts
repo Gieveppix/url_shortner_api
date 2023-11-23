@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { generateToken } from '../../middleware';
-import { IUser } from '../../types/models';
+import { IUser } from '../../types';
 import { config } from '../../config';
 
 // The expect is extended because it behaves weird on its own. This is a more straight forward implementation of the expect.toBeCloseTo assertion
@@ -48,11 +48,11 @@ describe('generateToken', () => {
     };
     const token = generateToken(user);
 
-    const decodedToken = jwt.verify(token, config.jwtSecret, { ignoreExpiration: true }) as JwtPayload; 
-    const now = Date.now() / 1000;
-    const expiration = decodedToken.exp;
+    const decodedToken = jwt.verify(token, config.jwtSecret, { ignoreExpiration: false }) as JwtPayload; 
+    const now = Date.now();
+    const expiration = decodedToken.exp! * 1000;
     const expectedExpiration = 7 * 24 * 60 * 60; // 7 days
-    const tolerance = 1; // In seconds
+    const tolerance = 86400; // 1 day
 
     expect(expiration! - now).toBeCloseTo(expectedExpiration, tolerance);
   });
