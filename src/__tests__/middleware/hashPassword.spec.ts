@@ -1,5 +1,5 @@
 import { CallbackWithoutResultAndOptionalError } from 'mongoose';
-import { IUser } from '../../types/models';
+import { IUser } from '../../types';
 import bcrypt from 'bcrypt';
 import { hash } from '../../middleware';
 

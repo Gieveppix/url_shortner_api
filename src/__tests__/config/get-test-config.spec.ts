@@ -8,6 +8,7 @@ describe('getTestConfig', () => {
       ENV: 'test',
       LOG_LEVEL: 'info',
       JWT_SECRET: 'your-secret',
+      JWT_EXPIRY_IN_SECONDS: 604800,
       MONGO_URI: 'your-mongo-uri',
     };
 
@@ -16,6 +17,7 @@ describe('getTestConfig', () => {
       environment: 'test',
       logLevel: 'info',
       jwtSecret: 'your-secret',
+      jwtExpiryInSeconds: 604800,
       mongoURI: 'your-mongo-uri',
     };
 
