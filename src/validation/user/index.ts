@@ -1,4 +1,4 @@
-import { loginRules, registerRules } from "./user.rules";
+import { loginRules, registerRules } from "./rules";
 import { HandleValidationErrors, handleValidationErrors } from "../../middleware";
 
 class UserValidation {

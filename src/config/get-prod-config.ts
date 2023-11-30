@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export function getLocalConfig(processVariables: ProcessVariables): Config {
+export function getProductionConfig(processVariables: ProcessVariables): Config {
   return {
     port: processVariables.PORT,
-    environment: 'local',
+    environment: 'production',
     logLevel: processVariables.LOG_LEVEL ?? 'info',
     jwtSecret: processVariables.JWT_SECRET,
     jwtExpiryInSeconds: processVariables.JWT_EXPIRY_IN_SECONDS,

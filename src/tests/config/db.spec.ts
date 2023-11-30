@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import { connectDB } from '../../config/db';
-import { logger } from '../../helpers/logger'
+import { connectDB } from '../../config';
+import { logger } from '../../utils'
 
-jest.mock('../../helpers/logger', () => ({
+jest.mock('../../utils', () => ({
   logger: {
     info: jest.fn(),
     error: jest.fn(),

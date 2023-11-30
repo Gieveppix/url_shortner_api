@@ -1,7 +1,7 @@
 import { CallbackWithoutResultAndOptionalError } from 'mongoose';
-import { IUser } from '../../types';
 import bcrypt from 'bcrypt';
-import { hash } from '../../middleware';
+import { IUser } from '../../types';
+import { hash } from '../../models/utils/hashPassword';
 
 describe('hash', () => {
   it('should hash the password if it is modified', async () => {

@@ -1,6 +1,4 @@
-import { logger } from '../../helpers/logger';
-// import { mock, when, anything } from 'ts-mockito';
-// import { IncomingMessage, ServerResponse } from 'http';
+import { logger } from '../../utils';
 
 describe('Logger Configuration', () => {
   it('should configure the logger with the expected log level', () => {

@@ -1,4 +1,4 @@
-import { createRules, editRules } from "./url.rules";
+import { createRules, editRules } from "./rules";
 import { HandleValidationErrors, handleValidationErrors } from "../../middleware";
 
 class UrlValidation {

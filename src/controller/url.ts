@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
+import { ApiResponse, IUrl, IUser, CreateUrl, GetUrlQuery, GetUrlQueryWithPagination } from '../types';
 import UrlService from '../service/url';
-import { IUrl, IUser } from '../types';
-import { ApiResponse } from '../types';
-import { HandleController } from '../middleware/errorCodes';
-import { CreateUrl, GetUrlQuery, GetUrlQueryWithPagination } from '../types';
+import { logger, HandleController } from '../utils';
 
 class UrlController {
   @HandleController
@@ -39,7 +37,8 @@ class UrlController {
 
   @HandleController
   async getLongUrl(req: Request, res: Response): Promise<ApiResponse | void> {
-    const shortUrl: IUrl['shortUrl'] = req.body.shortUrl;
+    logger.error(JSON.stringify(req.params))
+    const shortUrl: IUrl['shortUrl'] = req.params.short_url;
 
     return UrlService.getLongUrl(shortUrl);
   }

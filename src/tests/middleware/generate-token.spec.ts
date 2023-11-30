@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { generateToken } from '../../middleware';
-import { IUser } from '../../types';
 import { config } from '../../config';
+import { IUser } from '../../types';
+import TokenService from "../../service/token"
 
 // The expect is extended because it behaves weird on its own. This is a more straight forward implementation of the expect.toBeCloseTo assertion
 expect.extend({
@@ -21,7 +21,7 @@ describe('generateToken', () => {
       _id: "123",
       email: 'example@example.com',
     };
-    const token = generateToken(user);
+    const token = TokenService.generateToken(user);
 
     expect(typeof token).toBe('string');
     expect(token).not.toBeNull();
@@ -32,7 +32,7 @@ describe('generateToken', () => {
       _id: "123",
       email: 'example@example.com',
     };
-    const token = generateToken(user);
+    const token = TokenService.generateToken(user);
 
     const decodedToken = jwt.verify(token, config.jwtSecret) as JwtPayload; 
 
@@ -46,7 +46,7 @@ describe('generateToken', () => {
       _id: "123",
       email: 'example@example.com',
     };
-    const token = generateToken(user);
+    const token = TokenService.generateToken(user);
 
     const decodedToken = jwt.verify(token, config.jwtSecret, { ignoreExpiration: false }) as JwtPayload; 
     const now = Date.now();
