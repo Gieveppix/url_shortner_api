@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { IUser } from '../types';
+import { ApiResponse, IUser } from '../types';
 import UserService from '../service/user';
-import { HandleController } from '../middleware/errorCodes';
-import { ApiResponse } from '../types';
+import { HandleController } from '../utils';
 
 class UserController {
   @HandleController

@@ -7,7 +7,13 @@ stopdb:
 startdb:
 	docker start url_shortner
 
-server:
+dev:
 	npm run dev
 
-.PHONY: mongo startdb stopdb server
+test:
+	npm run test
+
+prod:
+	docker-compose up --build
+
+.PHONY: mongo startdb stopdb dev test prod

@@ -1,11 +1,9 @@
 import bcrypt from 'bcrypt';
-import type { ApiResponse } from '../types/response';
-import { User, Token, TokenAction } from '../models';
-import { IUser } from '../types';
-import { HttpStatusCode } from '../types/response';
-import { sendEmail, saveToken } from '../middleware';
 import { v4 as uuidv4 } from "uuid"
-import { HandleService } from '../middleware/errorCodes';
+import { ApiResponse, IUser, HttpStatusCode } from '../types';
+import { User, Token, TokenAction } from '../models';
+import TokenService from "./token"
+import { HandleService, sendEmail } from '../utils';
 
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 1 * 60 * 1000; // 1 min
@@ -29,7 +27,7 @@ class UserService {
     await sendEmail(payload.email, user._id, verificationToken);
     
     // return a valid jwt so the user gets logged in right away
-    const token = await saveToken(user)
+    const token = await TokenService.saveToken(user)
 
     return {
       status: 'success',
@@ -59,7 +57,7 @@ class UserService {
     
       const { password, failedLoginAttempts, ...userObject } = user.toObject();
     
-      const token = await saveToken(userObject);
+      const token = await TokenService.saveToken(userObject);
     
       return {
         status: 'success',

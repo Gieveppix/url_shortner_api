@@ -2,7 +2,7 @@ import nodemailer, { Transporter } from "nodemailer";
 import { config } from "../config";
 import { IUser, TokenActions } from "../types";
 import { TokenAction } from "../models";
-import { logger } from "../helpers/logger";
+import { logger } from "./";
 
 interface EmailOptions {
   to: string;
@@ -18,9 +18,6 @@ const transport: Transporter = nodemailer.createTransport({
     pass: config.transportAuthPass,
   },
 });
-
-
-
 
 export const sendEmail = async (to: string, userId: IUser['_id'], verificationToken: string) => {
 

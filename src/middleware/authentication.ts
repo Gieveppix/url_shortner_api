@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { decodeToken } from './token';
 import { RequestUser, DecodedUser, HttpStatusCode, ResponseError } from '../types';
 import { Token } from '../models';
+import TokenService from '../service/token'
 
 declare module 'express' {
   interface Request {
@@ -28,7 +28,7 @@ export const authenticate = async (
   }
 
   try {
-    const decoded = decodeToken(token) as DecodedUser;
+    const decoded = TokenService.decodeToken(token) as DecodedUser;
     const userToken = await Token.findOne({ jwt: token, isInvalidated: false });
     
     if (!userToken) {

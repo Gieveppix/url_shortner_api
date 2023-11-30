@@ -4,3 +4,5 @@ jest.config.js
 dist
 .env
 package-lock.json
+data
+database
