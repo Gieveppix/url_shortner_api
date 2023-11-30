@@ -1,9 +1,9 @@
 import express from 'express';
-import { logger, httpLogger } from "./helpers/logger"
 import { config, connectDB } from "./config"
 import { userRoute } from './routes/user';
-import { authenticate, isVerified } from './middleware';
 import { urlRoute } from './routes/url';
+import { authenticate, isVerified } from './middleware';
+import { logger, httpLogger } from "./utils"
 
 const app = express();
 app.use(express.json());

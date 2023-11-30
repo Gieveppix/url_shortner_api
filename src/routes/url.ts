@@ -11,7 +11,7 @@ urlRoute.get('/urls', authenticate, UrlController.getAll)
 
 urlRoute.get('/urls/user', authenticate, UrlController.getByUserId);
 
-urlRoute.get('/urls/long_url', UrlController.getLongUrl)
+urlRoute.get('/urls/:short_url*', UrlController.getLongUrl)
 
 urlRoute.patch('/urls/:url_id', authenticate, UrlValidation.edit, UrlController.edit);
 

@@ -1,7 +1,7 @@
-import { ErrorName, ResponseError } from '../types'
-import { errorCode } from "./errorCodes"
+import { errorCode } from '../config/errorCodes';
+import { ErrorName, ResponseError } from '../types';
 
-class FormatError {
+class ErrorService {
   private req?: any;
   private res?: any;
 
@@ -11,7 +11,7 @@ class FormatError {
   }
 
   private createError(error: ErrorName | null): ResponseError {
-    const defaultError: ResponseError = errorCode["INTERNAL_SERVER_ERROR"]
+    const defaultError: ResponseError = errorCode.INTERNAL_SERVER_ERROR;
 
     if (typeof error === 'string') {
       const errorCode: ResponseError | null = this.getErrorFromCode(error as ErrorName);
@@ -21,12 +21,11 @@ class FormatError {
   }
 
   private getErrorFromCode(code: ErrorName): ResponseError | null {
-    // Lookup the error code in the mapping
     const mappedError = errorCode[code];
     return mappedError || null;
   }
-
-  public format(error: ErrorName | null): ResponseError {
+   
+  format(error: ErrorName | null): ResponseError {
     const errorResponse = this.createError(error);
 
     if (this.req && this.res) {
@@ -40,6 +39,10 @@ class FormatError {
 
     return errorResponse;
   }
+   
+  isPredefinedError(error: any): error is ErrorName {
+    return Object.keys(errorCode).includes(error);
+  }
 }
 
-export default FormatError;
+export default new ErrorService;

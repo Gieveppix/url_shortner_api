@@ -1,8 +1,8 @@
 import Randomstring from "randomstring"
-import { Url } from '../models';
 import { IUser, IUrl, ApiResponse, HttpStatusCode, CreateUrl, GetUrlQuery, GetUrlQueryWithPagination, PaginatedUrlPayload, PaginatedUrlResult } from '../types';
-import { HandleService } from '../middleware/errorCodes';
+import { Url } from '../models';
 import { Document, FilterQuery } from 'mongoose';
+import { logger, HandleService } from "../utils";
 
 // TODO: Check causes and messages
 class UrlService {
@@ -75,10 +75,12 @@ class UrlService {
 
   @HandleService
   async getLongUrl(shortUrl: IUrl['shortUrl']): Promise<ApiResponse> {
+    logger.error(`AAAAAAAAAAA ${shortUrl}`)
     const existingUrl = await Url.findOne({ shortUrl });
-
+    
     if(!existingUrl) {
-      throw "URL_EXISTS"
+      logger.error(`${existingUrl}`)
+      throw "URL_NOT_FOUND"
     }
 
     return {

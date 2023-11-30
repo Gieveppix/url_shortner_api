@@ -1,5 +1,5 @@
 import { Model, model, Schema } from 'mongoose';
-import { IUrl } from '../types/url';
+import { IUrl } from '../types';
 
 const urlSchema = new Schema<IUrl>({
   urlName: {

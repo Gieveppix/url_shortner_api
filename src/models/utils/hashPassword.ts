@@ -1,6 +1,6 @@
 import { CallbackWithoutResultAndOptionalError } from "mongoose";
-import { IUser } from "../types";
 import bcrypt from "bcrypt"
+import { IUser } from "../../types";
 
 export const hash = async (user: IUser, next: CallbackWithoutResultAndOptionalError) => {
   if (!user.isModified('password')) {
@@ -10,4 +10,4 @@ export const hash = async (user: IUser, next: CallbackWithoutResultAndOptionalEr
   const hashedPassword = await bcrypt.hash(user.password, salt);
   user.password = hashedPassword;
   return next();
-} // TODO Move to helper
+}

@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { ApiResponse, HttpStatusCode } from "../types/response";
+import { ApiResponse, HttpStatusCode } from "./types";
 
 export function handleResponse<T extends ApiResponse>(response: T | void, res: Response): void {
   if (response && 'code' in response) {

@@ -15,6 +15,7 @@ export interface Config {
   jwtSecret: string,
   jwtExpiryInSeconds: number,
   mongoURI: string
+  mongoURIProd?: string,
   transportHost?: string
   transportPort?: number
   transportAuthUser?: string
@@ -30,6 +31,7 @@ export interface ProcessVariables {
   JWT_SECRET: string,
   JWT_EXPIRY_IN_SECONDS: number;
   MONGO_URI: string,
+  MONGO_URI_PROD?: string,
   TRANSPORT_HOST?: string
   TRANSPORT_PORT?: number
   TRANSPORT_AUTH_USER?: string
