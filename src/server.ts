@@ -2,7 +2,6 @@ import express from 'express';
 import { config, connectDB } from "./config"
 import { userRoute } from './routes/user';
 import { urlRoute } from './routes/url';
-import { authenticate, isVerified } from './middleware';
 import { logger, httpLogger } from "./utils"
 
 const app = express();
@@ -12,7 +11,7 @@ app.use('/api', userRoute);
 app.use('/api', urlRoute);
 
 
-app.get('/api/ping', authenticate, isVerified, function (req, res) {
+app.get('/api/ping', function (req, res) {
   res.send('pong');
 });
 

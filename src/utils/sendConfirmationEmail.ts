@@ -11,8 +11,10 @@ interface EmailOptions {
 }
 
 const transport: Transporter = nodemailer.createTransport({
+  service: config.transportService,
   host: config.transportHost,
   port: config.transportPort,
+  secure: config.transportSecure,
   auth: {
     user: config.transportAuthUser,
     pass: config.transportAuthPass,
@@ -22,7 +24,7 @@ const transport: Transporter = nodemailer.createTransport({
 export const sendEmail = async (to: string, userId: IUser['_id'], verificationToken: string) => {
 
   const subject = "Confirm Email";
-  const text = `go to link http://localhost:3000/api/verify-email/${verificationToken}`
+  const text = `go to link http://51.20.91.35:3000/api/verify-email/${verificationToken}`
 
   const mailOptions: EmailOptions = {
     to,
