@@ -1,11 +1,14 @@
 import express from 'express';
+import cors from 'cors'
 import { config, connectDB } from "./config"
 import { userRoute } from './routes/user';
 import { urlRoute } from './routes/url';
 import { logger, httpLogger } from "./utils"
 
 const app = express();
+
 app.use(express.json());
+app.use(cors())
 app.use(httpLogger);
 app.use('/api', userRoute);
 app.use('/api', urlRoute);
